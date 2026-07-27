@@ -3,11 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyun <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 20:55:52 by gyun              #+#    #+#             */
-/*   Updated: 2026/07/24 20:55:55 by gyun             ###   ########.fr       */
+/*   Updated: 2026/07/27 17:38:51 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef MINITALK_H
+# define MINITALK_H
 
+# include <signal.h>
+# include <sys/types.h>
+# include "libft.h"
+
+#endif
