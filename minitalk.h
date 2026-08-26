@@ -6,7 +6,7 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 20:55:52 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/27 03:13:18 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/27 04:20:31 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # define _DEFAULT_SOURCE
 # define SEND_DELAY 400
 # define BYTE_TIMEOUT 10000
+# define CLIENT_SEND 1
+# define SERVER_SEND 2
 
 # include <signal.h>
 # include <sys/types.h>

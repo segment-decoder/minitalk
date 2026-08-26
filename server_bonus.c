@@ -6,7 +6,7 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/27 17:25:39 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/27 02:44:30 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/27 04:22:43 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ static t_sig	ft_init_sig(void (*handler)(int, siginfo_t *, void *))
 	sig.sa_sigaction = handler;
 	sig.sa_flags = SA_SIGINFO;
 	if (sigemptyset(&sig.sa_mask))
-		ft_exit("Signal set", 2);
+		ft_exit("Signal set", SERVER_SEND);
 	if (sigaddset(&sig.sa_mask, SIGUSR1) || sigaddset(&sig.sa_mask, SIGUSR2))
-		ft_exit("Signal set", 2);
+		ft_exit("Signal set", SERVER_SEND);
 	if (sigaction(SIGUSR1, &sig, NULL) || sigaction(SIGUSR2, &sig, NULL))
-		ft_exit("Signal set", 2);
+		ft_exit("Signal set", SERVER_SEND);
 	return (sig);
 }
 
@@ -51,11 +51,11 @@ static void	ft_handler(int sig, siginfo_t *info, void *context)
 		{
 			g_server.client_end = 1;
 			if (write(1, "\n", 1) == -1)
-				ft_exit("Write function", 2);
+				ft_exit("Write function", SERVER_SEND);
 		}
 		else
 			if (write(1, &g_server.buf, 1) == -1)
-				ft_exit("Write function", 2);
+				ft_exit("Write function", SERVER_SEND);
 		ft_reset_g();
 	}
 	return ;

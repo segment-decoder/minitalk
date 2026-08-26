@@ -6,7 +6,7 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 20:55:52 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/27 02:37:17 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/27 04:20:41 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # define _POSIX_C_SOURCE 200809L
 # define _DEFAULT_SOURCE
 # define BIT_TIMEOUT 1000
+# define CLIENT_SEND 1
+# define SERVER_SEND 2
 
 # include <signal.h>
 # include <sys/types.h>
