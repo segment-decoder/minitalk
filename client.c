@@ -6,7 +6,7 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 20:56:05 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/27 01:05:35 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/27 01:31:02 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	ft_pidcheck(const char *str)
 		i++;
 	}
 	if (pid <= 0)
-		ft_exit("PID", 1);
+		return (-1);
 	return ((int)pid);
 }
 
@@ -70,6 +70,8 @@ int	main(int argc, char **argv)
 	if (argc != 3)
 		ft_exit("Arguments", 1);
 	pid = ft_pidcheck(argv[1]);
+	if (pid < 0)
+		ft_exit("PID", 1);
 	while (argv[2][i])
 		ft_message(pid, (unsigned char)(argv[2][i++]));
 	ft_message(pid, '\0');

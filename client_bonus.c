@@ -6,7 +6,7 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 20:56:05 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/27 01:20:28 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/27 01:31:51 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	ft_pidcheck(const char *str)
 		i++;
 	}
 	if (pid <= 0)
-		ft_exit("PID", 1);
+		return (-1);
 	return ((int)pid);
 }
 
@@ -76,7 +76,8 @@ static void	ft_send(pid_t pid, const char *msg)
 			ft_exit("Resend", 1);
 		g_ack = 0;
 		ft_message(pid, (unsigned char)(msg[i]));
-		usleep(BYTE_TIMEOUT);
+		if (!g_ack)
+			usleep(BYTE_TIMEOUT);
 		if (g_ack)
 		{
 			re = 0;
@@ -97,6 +98,8 @@ int	main(int argc, char **argv)
 	if (argc != 3)
 		ft_exit("Arguments", 1);
 	pid = ft_pidcheck(argv[1]);
+	if (pid < 0)
+		ft_exit("PID", 1);
 	ft_send(pid, argv[2]);
 	while (re++ < 3)
 	{
