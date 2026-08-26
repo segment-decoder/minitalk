@@ -6,7 +6,7 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 20:56:05 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/26 23:26:19 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/26 23:29:23 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,7 @@ static void	ft_send(pid_t pid, const char *msg)
 int	main(int argc, char **argv)
 {
 	int	pid;
-	int	i;
-	int	re;
 
-	i = 0;
-	re = 0;
 	signal(SIGUSR1, ft_handler);
 	if (argc != 3)
 		ft_exit("arguments");
