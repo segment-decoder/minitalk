@@ -6,15 +6,18 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 20:56:05 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/27 01:07:26 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/27 01:20:28 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
+static volatile sig_atomic_t	g_ack = 0;
+
 static void	ft_handler(int sig)
 {
 	(void)sig;
+	g_ack = 1;
 }
 
 static void	ft_message(pid_t pid, unsigned char c)
@@ -71,8 +74,10 @@ static void	ft_send(pid_t pid, const char *msg)
 	{
 		if (re > 3)
 			ft_exit("Resend", 1);
+		g_ack = 0;
 		ft_message(pid, (unsigned char)(msg[i]));
-		if (usleep(BYTE_TIMEOUT) == -1 && errno == EINTR)
+		usleep(BYTE_TIMEOUT);
+		if (g_ack)
 		{
 			re = 0;
 			++i;
@@ -96,7 +101,8 @@ int	main(int argc, char **argv)
 	while (re++ < 3)
 	{
 		ft_message(pid, '\0');
-		if (usleep(BYTE_TIMEOUT) == -1 && errno == EINTR)
+		usleep(BYTE_TIMEOUT);
+		if (g_ack)
 			return (0);
 	}
 	ft_exit("Null terminate", 1);
