@@ -6,13 +6,28 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/27 17:25:39 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/27 00:56:46 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/27 01:44:46 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
 static t_server	g_server = {0};
+
+static void	ft_init_sig(void (*handler)(int))
+{
+	t_sig	sig;
+
+	sig.sa_sigaction = handler;
+	sig.sa_flags = 0;
+	if (sigemptyset(&sig.sa_mask))
+		ft_exit("Signal set", 2);
+	if (sigaddset(&sig.sa_mask, SIGUSR1) || sigaddset(&sig.sa_mask, SIGUSR2))
+		ft_exit("Signal set", 2);
+	if (sigaction(SIGUSR1, &sig, NULL) || sigaction(SIGUSR2, &sig, NULL))
+		ft_exit("Signal set", 2);
+	return (sig);
+}
 
 static void	ft_reset_g(void)
 {
@@ -42,8 +57,7 @@ static void	ft_handler(int sig)
 
 int	main(void)
 {
-	signal(SIGUSR1, ft_handler);
-	signal(SIGUSR2, ft_handler);
+	ft_init_sig(ft_handler);
 	ft_printf("Server is now running.\nPID: %d\n", getpid());
 	while (1)
 	{

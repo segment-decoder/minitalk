@@ -6,7 +6,7 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 20:56:05 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/27 01:31:51 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/27 01:38:31 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	main(int argc, char **argv)
 	ft_send(pid, argv[2]);
 	while (re++ < 3)
 	{
+		g_ack = 0;
 		ft_message(pid, '\0');
 		usleep(BYTE_TIMEOUT);
 		if (g_ack)
