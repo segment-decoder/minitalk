@@ -6,7 +6,7 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/27 17:25:39 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/27 02:37:50 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/27 02:44:30 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ static void	ft_handler(int sig, siginfo_t *info, void *context)
 	(void)context;
 	g_server.buf = ((g_server.buf << 1) | (sig == SIGUSR2));
 	if (kill(info->si_pid, SIGUSR1))
-		ft_exit("Connection", 2);
+	{
+		ft_reset_g();
+		return ;
+	}
 	g_server.bit_count++;
 	if (g_server.bit_count == 8)
 	{
