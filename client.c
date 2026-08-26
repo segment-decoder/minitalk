@@ -6,7 +6,7 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 20:56:05 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/26 23:29:23 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/27 00:41:57 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ static void	ft_message(pid_t pid, unsigned char c)
 	while (i >= 0)
 	{
 		if ((c >> i) & 1)
-			kill(pid, SIGUSR2);
+			if (kill(pid, SIGUSR2))
+				ft_exit("connection", 1);
 		else
-			kill(pid, SIGUSR1);
+			if (kill(pid, SIGUSR1))
+				ft_exit("connection", 1);
 		usleep(SEND_DELAY);
 		--i;
 	}
@@ -52,43 +54,22 @@ static int	ft_pidcheck(const char *str)
 		i++;
 	}
 	if (pid <= 0)
-		return (-1);
+		ft_exit("arguments", 1);
 	return ((int)pid);
-}
-
-static void	ft_send(pid_t pid, const char *msg)
-{
-	int	i;
-	int	re;
-
-	i = 0;
-	re = 0;
-	while (msg[i])
-	{
-		if (re > 3)
-			ft_exit("connection");
-		ft_message(pid, (unsigned char)(msg[i]));
-		if (usleep(BYTE_TIMEOUT) == -1)
-		{
-			re = 0;
-			++i;
-		}
-		else
-			++re;
-	}
 }
 
 int	main(int argc, char **argv)
 {
 	int	pid;
+	int	i;
 
+	i = 0;
 	signal(SIGUSR1, ft_handler);
 	if (argc != 3)
-		ft_exit("arguments");
+		ft_exit("arguments", 1);
 	pid = ft_pidcheck(argv[1]);
-	if (pid < 0)
-		ft_exit("arguments");
-	ft_send(pid, argv[2]);
+	while (argv[2][i])
+		ft_message(pid, (unsigned char)(argv[2][i++]));
 	ft_message(pid, '\0');
 	return (0);
 }

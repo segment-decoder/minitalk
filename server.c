@@ -6,7 +6,7 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/27 17:25:39 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/26 23:10:42 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/27 00:44:22 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@ static t_sig	ft_init_sig(void (*handler)(int, siginfo_t *, void *))
 
 	sig.sa_sigaction = handler;
 	sig.sa_flags = SA_SIGINFO;
-	sigemptyset(&sig.sa_mask);
-	sigaddset(&sig.sa_mask, SIGUSR1);
-	sigaddset(&sig.sa_mask, SIGUSR2);
-	sigaction(SIGUSR1, &sig, NULL);
-	sigaction(SIGUSR2, &sig, NULL);
+	if (sigemptyset(&sig.sa_mask))
+		ft_exit("Signal set", 2);
+	if (sigaddset(&sig.sa_mask, SIGUSR1) || sigaddset(&sig.sa_mask, SIGUSR2))
+		ft_exit("Signal set", 2);
+	if (sigaction(SIGUSR1, &sig, NULL) || sigaction(SIGUSR2, &sig, NULL))
+		ft_exit("Signal set", 2);
 	return (sig);
 }
 
@@ -44,11 +45,12 @@ static void	ft_handler(int sig, siginfo_t *info, void *context)
 		if (g_server.buf == '\0')
 		{
 			g_server.client_end = 1;
-			write(1, "\n", 1);
+			if (write(1, "\n", 1))
+				ft_exit("Write function", 2);
 		}
 		else
-			write(1, &g_server.buf, 1);
-		kill(info->si_pid, SIGUSR1);
+			if (write(1, &g_server.buf, 1))
+				ft_exit("Write function", 2);
 		ft_reset_g();
 	}
 	return ;
@@ -66,7 +68,10 @@ int	main(void)
 		while (g_server.client_end != 1)
 		{
 			if (usleep(BYTE_TIMEOUT) == 0)
+			{
 				ft_reset_g();
+				break ;
+			}
 		}
 		g_server.client_end = 0;
 	}
