@@ -6,7 +6,7 @@
 #    By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/24 20:56:19 by gyun              #+#    #+#              #
-#    Updated: 2026/08/27 00:51:43 by gyun             ###   ########.fr        #
+#    Updated: 2026/08/27 02:11:34 by gyun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ RM = rm -rf
 LIBDIR = libft
 LIBFT = $(LIBDIR)/libft.a
 INCLUDE = -I. -I$(LIBDIR)
-HEADER = minitalk.h $(LIBDIR)/libft.h
+HEADER = minitalk.h minitalk_bonus.h $(LIBDIR)/libft.h
 
 ifdef WITH_BONUS
 	CLIENT_OBJ_FILES = $(OBJS_CLIENT_BN)

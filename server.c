@@ -6,7 +6,7 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/27 17:25:39 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/27 01:44:46 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/27 01:47:59 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	ft_init_sig(void (*handler)(int))
 {
 	t_sig	sig;
 
-	sig.sa_sigaction = handler;
+	sig.sa_handler = handler;
 	sig.sa_flags = 0;
 	if (sigemptyset(&sig.sa_mask))
 		ft_exit("Signal set", 2);
@@ -26,7 +26,6 @@ static void	ft_init_sig(void (*handler)(int))
 		ft_exit("Signal set", 2);
 	if (sigaction(SIGUSR1, &sig, NULL) || sigaction(SIGUSR2, &sig, NULL))
 		ft_exit("Signal set", 2);
-	return (sig);
 }
 
 static void	ft_reset_g(void)

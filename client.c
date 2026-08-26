@@ -6,16 +6,11 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 20:56:05 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/27 01:31:02 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/27 01:50:19 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-
-static void	ft_handler(int sig)
-{
-	(void)sig;
-}
 
 static void	ft_message(pid_t pid, unsigned char c)
 {
@@ -66,7 +61,6 @@ int	main(int argc, char **argv)
 	int	i;
 
 	i = 0;
-	signal(SIGUSR1, ft_handler);
 	if (argc != 3)
 		ft_exit("Arguments", 1);
 	pid = ft_pidcheck(argv[1]);
