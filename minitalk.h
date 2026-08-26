@@ -6,7 +6,7 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 20:55:52 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/26 23:12:11 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/26 23:23:01 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ typedef struct s_server
 	int				bit_count;
 	char			client_end;
 }	t_server;
+
+void	ft_exit(char *str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 20:56:05 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/26 23:03:19 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/26 23:26:19 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,26 @@ static int	ft_pidcheck(const char *str)
 	return ((int)pid);
 }
 
-static void	ft_exit(char *str)
+static void	ft_send(pid_t pid, const char *msg)
 {
-	ft_printf("Wrong %s.\nTo send message, type: [PID] [message]", str);
-	exit(1);
+	int	i;
+	int	re;
+
+	i = 0;
+	re = 0;
+	while (msg[i])
+	{
+		if (re > 3)
+			ft_exit("connection");
+		ft_message(pid, (unsigned char)(msg[i]));
+		if (usleep(BYTE_TIMEOUT) == -1)
+		{
+			re = 0;
+			++i;
+		}
+		else
+			++re;
+	}
 }
 
 int	main(int argc, char **argv)
@@ -76,16 +92,7 @@ int	main(int argc, char **argv)
 	pid = ft_pidcheck(argv[1]);
 	if (pid < 0)
 		ft_exit("arguments");
-	while (argv[2][i])
-	{
-		if (re > 3)
-			ft_exit("connection");
-		ft_message(pid, (unsigned char)(argv[2][i++]));
-		if (usleep(BYTE_TIMEOUT) == -1)
-			++i;
-		else
-			++re;
-	}
+	ft_send(pid, argv[2]);
 	ft_message(pid, '\0');
 	return (0);
 }

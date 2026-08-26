@@ -6,8 +6,14 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/28 19:14:50 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/26 22:28:56 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/26 23:22:50 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+void	ft_exit(char *str)
+{
+	ft_printf("Wrong %s.\nTo send message, type: [PID] [message]", str);
+	exit(1);
+}
