@@ -6,7 +6,7 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/27 17:25:39 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/27 00:45:35 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/27 00:56:19 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ static void	ft_handler(int sig, siginfo_t *info, void *context)
 		if (g_server.buf == '\0')
 		{
 			g_server.client_end = 1;
-			if (write(1, "\n", 1))
+			if (write(1, "\n", 1) == -1)
 				ft_exit("Write function", 2);
 		}
 		else
-			if (write(1, &g_server.buf, 1))
+			if (write(1, &g_server.buf, 1) == -1)
 				ft_exit("Write function", 2);
 		if (kill(info->si_pid, SIGUSR1))
 			ft_exit("Connection", 2);
@@ -60,9 +60,7 @@ static void	ft_handler(int sig, siginfo_t *info, void *context)
 
 int	main(void)
 {
-	t_sig	sig;
-
-	sig = ft_init_sig(ft_handler);
+	ft_init_sig(ft_handler);
 	ft_printf("Server is now running.\nPID: %d\n", getpid());
 	while (1)
 	{

@@ -6,7 +6,7 @@
 #    By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/24 20:56:19 by gyun              #+#    #+#              #
-#    Updated: 2026/08/27 00:34:51 by gyun             ###   ########.fr        #
+#    Updated: 2026/08/27 00:51:43 by gyun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,10 @@ NAME_CLIENT = client
 NAME_SERVER = server
 
 SRCS_CLIENT = client.c utils.c
-SRCS_SERVER = server.c
+SRCS_SERVER = server.c utils.c
 
-SRCS_CLIENT_BN = client_bonus.c utils.c
-SRCS_SERVER_BN = server_bonus.c
+SRCS_CLIENT_BN = client_bonus.c utils_bonus.c
+SRCS_SERVER_BN = server_bonus.c utils_bonus.c
 
 OBJS_CLIENT = $(SRCS_CLIENT:.c=.o)
 OBJS_SERVER = $(SRCS_SERVER:.c=.o)

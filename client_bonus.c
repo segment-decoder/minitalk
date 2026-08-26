@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 20:56:05 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/27 00:17:17 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/27 01:07:26 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@ static void	ft_message(pid_t pid, unsigned char c)
 	while (i >= 0)
 	{
 		if ((c >> i) & 1)
+		{
 			if (kill(pid, SIGUSR2))
-				ft_exit("connection", 1);
+				ft_exit("SIGUSR2", 1);
+		}
 		else
 			if (kill(pid, SIGUSR1))
-				ft_exit("connection", 1);
+				ft_exit("SIGUSR1", 1);
 		usleep(SEND_DELAY);
 		--i;
 	}
@@ -54,7 +56,7 @@ static int	ft_pidcheck(const char *str)
 		i++;
 	}
 	if (pid <= 0)
-		ft_exit("arguments", 1);
+		ft_exit("PID", 1);
 	return ((int)pid);
 }
 
@@ -68,7 +70,7 @@ static void	ft_send(pid_t pid, const char *msg)
 	while (msg[i])
 	{
 		if (re > 3)
-			ft_exit("connection", 1);
+			ft_exit("Resend", 1);
 		ft_message(pid, (unsigned char)(msg[i]));
 		if (usleep(BYTE_TIMEOUT) == -1 && errno == EINTR)
 		{
@@ -88,7 +90,7 @@ int	main(int argc, char **argv)
 	re = 0;
 	signal(SIGUSR1, ft_handler);
 	if (argc != 3)
-		ft_exit("arguments", 1);
+		ft_exit("Arguments", 1);
 	pid = ft_pidcheck(argv[1]);
 	ft_send(pid, argv[2]);
 	while (re++ < 3)
@@ -97,6 +99,6 @@ int	main(int argc, char **argv)
 		if (usleep(BYTE_TIMEOUT) == -1 && errno == EINTR)
 			return (0);
 	}
-	ft_exit("connection", 1);
+	ft_exit("Null terminate", 1);
 	return (0);
 }
