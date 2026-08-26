@@ -6,7 +6,7 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 20:55:52 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/27 02:13:35 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/27 03:13:18 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define _POSIX_C_SOURCE 200809L
 # define _DEFAULT_SOURCE
-# define SEND_DELAY 250
+# define SEND_DELAY 400
 # define BYTE_TIMEOUT 10000
 
 # include <signal.h>
