@@ -6,7 +6,7 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 20:56:05 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/26 22:48:08 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/26 23:03:19 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ static int	ft_pidcheck(const char *str)
 	return ((int)pid);
 }
 
-static void	ft_exit(void)
+static void	ft_exit(char *str)
 {
-	ft_printf("Wrong arguments.\nTo send message, type: [PID] [message]");
+	ft_printf("Wrong %s.\nTo send message, type: [PID] [message]", str);
 	exit(1);
 }
 
@@ -66,25 +66,25 @@ int	main(int argc, char **argv)
 {
 	int	pid;
 	int	i;
-	int	bit;
 	int	re;
 
 	i = 0;
-	bit = 0;
 	re = 0;
 	signal(SIGUSR1, ft_handler);
 	if (argc != 3)
-		ft_exit();
+		ft_exit("arguments");
 	pid = ft_pidcheck(argv[1]);
 	if (pid < 0)
-		ft_exit();
+		ft_exit("arguments");
 	while (argv[2][i])
 	{
-		while (bit++ < 8)
-			ft_message(pid, (unsigned char)(argv[2][i++]));
+		if (re > 3)
+			ft_exit("connection");
+		ft_message(pid, (unsigned char)(argv[2][i++]));
 		if (usleep(BYTE_TIMEOUT) == -1)
-			i = i - 8;
-		bit = 0;
+			++i;
+		else
+			++re;
 	}
 	ft_message(pid, '\0');
 	return (0);

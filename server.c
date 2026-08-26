@@ -6,13 +6,13 @@
 /*   By: gyun <gyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/27 17:25:39 by gyun              #+#    #+#             */
-/*   Updated: 2026/08/26 22:54:18 by gyun             ###   ########.fr       */
+/*   Updated: 2026/08/26 23:10:42 by gyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static t_server	g_server = {.buf = 0, .bit_count = 0};
+static t_server	g_server = {0};
 
 static t_sig	ft_init_sig(void (*handler)(int, siginfo_t *, void *))
 {
@@ -41,7 +41,12 @@ static void	ft_handler(int sig, siginfo_t *info, void *context)
 	g_server.bit_count++;
 	if (g_server.bit_count == 8)
 	{
-		if (g_server.buf != '\0')
+		if (g_server.buf == '\0')
+		{
+			g_server.client_end = 1;
+			write(1, "\n", 1);
+		}
+		else
 			write(1, &g_server.buf, 1);
 		kill(info->si_pid, SIGUSR1);
 		ft_reset_g();
@@ -57,8 +62,13 @@ int	main(void)
 	ft_printf("Server is now running.\nPID: %d\n", getpid());
 	while (1)
 	{
-		if (usleep(BYTE_TIMEOUT) == 0)
-			ft_reset_g();
+		pause();
+		while (g_server.client_end != 1)
+		{
+			if (usleep(BYTE_TIMEOUT) == 0)
+				ft_reset_g();
+		}
+		g_server.client_end = 0;
 	}
 	return (0);
 }
