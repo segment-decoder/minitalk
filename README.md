@@ -1,5 +1,3 @@
-*This project has been created as part of the 42 curriculum by gyun.*
-
 # Minitalk
 
 본 프로젝트는 UNIX 시그널(`SIGUSR1`, `SIGUSR2`)만을 사용하여 클라이언트가 서버에게 문자열을 전송하는 통신 프로그램을 구현하는 것을 목표로 합니다.
